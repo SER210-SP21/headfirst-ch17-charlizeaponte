@@ -1,7 +1,7 @@
 /*
  @author Charlize Aponte
  Date: 04/28/24
- Assignment: Chapter 16 demo
+ Assignment: Chapter 17 demo
  */
 package edu.quinnipiac.ser210.task
 

@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.quinnipiac.ser210.task.databinding.TaskItemBinding
 
 
-class TaskItemAdapter : ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(TaskDiffItemCallback()) {
+class TaskItemAdapter(val clickListener: (taskId: Long) -> Unit)
+    : ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(TaskDiffItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : TaskItemViewHolder = TaskItemViewHolder.inflateFrom(parent)
     override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
+
     class TaskItemViewHolder(val binding: TaskItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
         companion object {
@@ -23,8 +25,9 @@ class TaskItemAdapter : ListAdapter<Task, TaskItemAdapter.TaskItemViewHolder>(Ta
                 return TaskItemViewHolder(binding)
             }
         }
-        fun bind(item: Task) {
+        fun bind(item: Task, clickListener: (taskId: Long) -> Unit) {
             binding.task = item
+            binding.root.setOnClickListener { clickListener(item.taskId) }
         }
     }
 }
